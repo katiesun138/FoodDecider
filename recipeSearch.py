@@ -14,7 +14,7 @@ user_selectType = labels[user_selectType]
 
 
 url = "https://tasty.p.rapidapi.com/recipes/list"
-querystring = {"from": "0", "size": "3", "tags": user_selectType}
+querystring = {"from": "0", "size": "30", "tags": user_selectType}
 
 headers = {
     'x-rapidapi-key': "b1e1ab1091mshcc9d4bcef44cbf0p1f1095jsn68c0743c6ce6",
@@ -25,9 +25,13 @@ response = (requests.get(url, headers=headers, params=querystring)).json()
 
 # print(response.text)
 responseResult = response["results"]
-thenName = responseResult[0]
+random_number = random.randint(0, len(responseResult))
+
+tempAllList = responseResult[random_number]
+thenName = (tempAllList["name"]).encode('ascii')
 
 pprint.pprint(thenName)
+print("\n")
 
 
 # entree_ideas = ['Hamburger', "Pizza", "Lamb Roast", "Chicken Noodle Soup",
