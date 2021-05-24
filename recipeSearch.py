@@ -3,14 +3,18 @@ import requests
 import pprint
 
 
-labels = {0: "Breakfast", 1: "Lunch",
-          2: "Appetizers", 3: "Dinner", 4: "Desserts"}
+labels = {0: "chinese", 1: "vegan",
+          2: "5_ingredients_or_less", 3: "under_30_minutes", 4: "vegetarian"}
 for i in range(len(labels)):
     print(str(i+1) + "." + labels[i])
 
+user_selectType = int(
+    input("What are you feeling like eating right now?(Input number): "))-1
+user_selectType = labels[user_selectType]
+
 
 url = "https://tasty.p.rapidapi.com/recipes/list"
-querystring = {"from": "0", "size": "", "tags": "under_30_minutes"}
+querystring = {"from": "0", "size": "3", "tags": user_selectType}
 
 headers = {
     'x-rapidapi-key': "b1e1ab1091mshcc9d4bcef44cbf0p1f1095jsn68c0743c6ce6",
@@ -21,7 +25,7 @@ response = (requests.get(url, headers=headers, params=querystring)).json()
 
 # print(response.text)
 responseResult = response["results"]
-thenName = responseResult[0]["name"]
+thenName = responseResult[0]
 
 pprint.pprint(thenName)
 
